@@ -1,11 +1,11 @@
-package com.hieptran.applicationx.control.feed;
+package com.hieptran.applicationx.control.its;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.hieptran.applicationx.model.Feed;
 import com.hieptran.applicationx.utils.Const;
-import com.hieptran.applicationx.utils.JSONParser;
+import com.hieptran.applicationx.utils.its.JSONParser;
 
 import org.apache.http.NameValuePair;
 import org.json.JSONArray;

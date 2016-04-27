@@ -3,6 +3,7 @@ package com.hieptran.applicationx;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,8 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.hieptran.applicationx.control.feed.FeedControl;
-import com.hieptran.applicationx.view.feed.FeedAdapter;
+import com.hieptran.applicationx.control.its.FeedControl;
+import com.hieptran.applicationx.view.adapter.FeedAdapter;
+import com.hieptran.applicationx.view.fragment.HomeFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,10 +29,12 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        lsFeeds = (ListView) findViewById(R.id.lsFeed);
-        mFeedAdapter = new FeedAdapter(FeedControl.getFeeds(),getApplicationContext());
-        lsFeeds.setAdapter(mFeedAdapter);
-        mFeedAdapter.notifyDataSetChanged();
+//        lsFeeds = (ListView) findViewById(R.id.lsFeed);
+//        mFeedAdapter = new FeedAdapter(FeedControl.getFeeds(),getApplicationContext());
+//        lsFeeds.setAdapter(mFeedAdapter);
+//        mFeedAdapter.notifyDataSetChanged();
+        Fragment setting = new HomeFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, setting).commit();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,8 +98,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 

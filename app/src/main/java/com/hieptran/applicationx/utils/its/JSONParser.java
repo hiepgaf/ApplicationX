@@ -1,6 +1,8 @@
-package com.hieptran.applicationx.utils;
+package com.hieptran.applicationx.utils.its;
 
 import android.util.Log;
+
+import com.hieptran.applicationx.utils.Const;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +26,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 /**
  * Created by hiepth on 26/04/2016.
  */
-public class JSONParser implements Const{
+public class JSONParser implements Const {
     static InputStream mInputStream;
     static JSONObject mJsonObject;
     static String mJson;

@@ -1,4 +1,4 @@
-package com.hieptran.applicationx.view.feed;
+package com.hieptran.applicationx.view.adapter;
 
 import android.content.Context;
 import android.util.Log;
