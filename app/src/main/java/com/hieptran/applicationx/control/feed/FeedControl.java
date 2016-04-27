@@ -23,11 +23,11 @@ public class FeedControl extends AsyncTask<Void,Void,Void> implements Const {
    static ArrayList<Feed> mFeedArrayList = new ArrayList<>();
     @Override
     protected Void doInBackground(Void... params) {
-        Log.d("HiepTHb","doInBackground");
+        Log.d("HiepTHb1","Chay doing");
         List<NameValuePair> paramsd = new ArrayList<NameValuePair>();
         // getting JSON string from URL
         JSONObject json = jsonParser.makeHttpRequest(url_get_product, "GET", paramsd);
-
+        mFeedArrayList.clear();
         Log.d("HiepTHb","url "+json.toString());
         try {
             JSONArray products = json.getJSONArray("products");
@@ -43,7 +43,7 @@ public class FeedControl extends AsyncTask<Void,Void,Void> implements Const {
                 ArrayList<String> linkanh = new ArrayList<>();
 
                 for(int k=0;k< urls.length();k++) {
-                    linkanh.add(urls.getJSONObject(k).getString("url"));
+                    linkanh.add(SERVER_NAME+"wp-content/uploads/"+urls.getJSONObject(k).getString("url"));
                 }
                 mFeed.setPost_attachment(linkanh);
                 mFeed.setPost_weather(mObject.getString("thoitiet"));

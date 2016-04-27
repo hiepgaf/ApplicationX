@@ -1,8 +1,11 @@
 package com.hieptran.applicationx;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,25 +15,50 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.android.volley.Cache;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.hieptran.applicationx.control.feed.AppController;
 import com.hieptran.applicationx.control.feed.FeedControl;
 import com.hieptran.applicationx.view.feed.FeedAdapter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     ListView lsFeeds;
     FeedAdapter mFeedAdapter;
+    SwipeRefreshLayout mSwipeRefreshLayout;
+Handler mHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mHandler = new Handler();
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swpRfrshLyt);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                                                     @Override
+                                                     public void onRefresh() {
+                                                         refreshContent();
+                                                     }
+                                                 });
+
         lsFeeds = (ListView) findViewById(R.id.lsFeed);
-        mFeedAdapter = new FeedAdapter(FeedControl.getFeeds(),getApplicationContext());
+        mHandler.post(avaiRAM);
+    mFeedAdapter = new FeedAdapter(FeedControl.getFeeds(),getApplicationContext());
         lsFeeds.setAdapter(mFeedAdapter);
-        mFeedAdapter.notifyDataSetChanged();
+       // mFeedAdapter.notifyDataSetChanged();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +77,75 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+    private void refreshContent(){
+        mFeedAdapter = new FeedAdapter(FeedControl.getFeeds(),getApplicationContext());
+        lsFeeds.setAdapter(mFeedAdapter);
+                mSwipeRefreshLayout.setRefreshing(false);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        mHandler.post(avaiRAM);
+
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mHandler.removeCallbacks(avaiRAM);
+        super.onDestroy();
+    }
+
+    private final Runnable avaiRAM = new Runnable() {
+        @Override
+        public void run() {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mSwipeRefreshLayout.setRefreshing(true);
+
+                            refreshContent();
+
+                        }
+                    });
+                }
+            }).start();
+            mHandler.postDelayed(avaiRAM, 30000);
+
+        }
+    };
+     final Runnable stoprefress = new Runnable() {
+        @Override
+        public void run() {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mSwipeRefreshLayout.setRefreshing(true);
+                            try {
+                                Thread.sleep(2000);
+                                mFeedAdapter = new FeedAdapter(FeedControl.getFeeds(),getApplicationContext());
+                                lsFeeds.setAdapter(mFeedAdapter);
+                                mSwipeRefreshLayout.setRefreshing(false);
+                            }catch (Exception ex) {}
+
+                        }
+                    });
+                }
+            }).start();
+            mHandler.postDelayed(avaiRAM, 10000);
+
+        }
+    };
+
+
 
     @Override
     public void onBackPressed() {
