@@ -1,11 +1,14 @@
 package com.hieptran.applicationx.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Point;
 import android.os.Build;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
 
 import java.text.DateFormat;
@@ -102,5 +105,19 @@ public class Utils {
         return (int) ((d2.getTime() - d1.getTime()) / DateUtils.DAY_IN_MILLIS);
     }
 
+    public static Bitmap loadBitmapFromView(View mView) {
+        Bitmap b = Bitmap.createBitmap(
+                mView.getWidth(),
+                mView.getHeight(),
+                Bitmap.Config.ARGB_8888);
 
+        Canvas c = new Canvas(b);
+
+        // With the following, screen blinks
+        //v.layout(0, 0, v.getLayoutParams().width, v.getLayoutParams().height);
+
+        mView.draw(c);
+
+        return b;
+    }
 }

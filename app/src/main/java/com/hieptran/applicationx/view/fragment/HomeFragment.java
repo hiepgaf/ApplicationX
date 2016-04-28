@@ -2,6 +2,7 @@ package com.hieptran.applicationx.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 /**
  * Created by hiepth on 27/04/2016.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener{
 
     RecyclerView mPostContainer;
     KenITAdapter mKenITAdapter;
@@ -30,6 +31,12 @@ public class HomeFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
 private LinearLayoutManager layoutManager;
     KenitControl mKenitControl;
+    AppBarLayout mAppBarLayout;
+
+    public HomeFragment(AppBarLayout mAppBarLayout) {
+        this.mAppBarLayout = mAppBarLayout;
+    }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -72,4 +79,25 @@ mKenitControl = new KenitControl(mKenITAdapter);
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.list_posts_fragment, container, false);    }
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+        if (i == 0) {
+            swipeRefreshLayout.setEnabled(true);
+        } else {
+            swipeRefreshLayout.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAppBarLayout.addOnOffsetChangedListener(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAppBarLayout.removeOnOffsetChangedListener(this);
+
+    }
 }
