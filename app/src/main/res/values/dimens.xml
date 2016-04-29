@@ -26,4 +26,8 @@
     <dimen name="tab_title_padding">15sp</dimen>
     <dimen name="tab_indicator">3dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="detail_backdrop_height">256dp</dimen>
+    <dimen name="card_margin">16dp</dimen>
+    <dimen name="list_item_avatar_size">40dp</dimen>
 </resources>

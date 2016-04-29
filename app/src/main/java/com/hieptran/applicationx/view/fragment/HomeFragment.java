@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.hieptran.applicationx.R;
 import com.hieptran.applicationx.control.kenit.KenitControl;
+import com.hieptran.applicationx.model.HomePost;
 import com.hieptran.applicationx.model.KenITPost;
 import com.hieptran.applicationx.view.adapter.KenITAdapter;
 
@@ -27,7 +28,7 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
 
     RecyclerView mPostContainer;
     KenITAdapter mKenITAdapter;
-    ArrayList<KenITPost> mKenITPosts;
+    ArrayList<HomePost> mKenITPosts;
     private SwipeRefreshLayout swipeRefreshLayout;
 private LinearLayoutManager layoutManager;
     KenitControl mKenitControl;
@@ -49,7 +50,7 @@ mKenitControl = new KenitControl(mKenITAdapter);
         mKenITAdapter.notifyDataSetChanged();
 
 
-        Log.d("HiepTHb","Test size"+KenitControl.getmFeedArrayList().size()+"");
+        //Log.d("HiepTHb","Test size"+KenitControl.getmFeedArrayList().size()+"");
         mPostContainer.setAdapter(mKenITAdapter);
         mKenITAdapter.notifyDataSetChanged();
 
@@ -69,7 +70,7 @@ mKenitControl = new KenitControl(mKenITAdapter);
        new KenitControl(mKenITAdapter).execute();
       //  mKenITAdapter = new KenITAdapter(getContext(),KenitControl.getmFeedArrayList());
 
-        Log.d("HiepTHb", "Test size" + KenitControl.getmFeedArrayList().size() + "");
+        //Log.d("HiepTHb", "Test size" + KenitControl.getmFeedArrayList().size() + "");
     //    mPostContainer.setAdapter(mKenITAdapter);
         mKenITAdapter.notifyDataSetChanged();
 

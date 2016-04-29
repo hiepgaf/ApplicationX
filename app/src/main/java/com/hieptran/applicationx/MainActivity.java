@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity
                 tabLayout.getLocationOnScreen(locations);
                 int x = locations[0];
                 int y = locations[1];
-                Log.d("HiepGa", x + "-" + y + "-" + tabLayout.getHeight());
+             //   Log.d("HiepGa", x + "-" + y + "-" + tabLayout.getHeight());
             }
         });
 

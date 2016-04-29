@@ -3,32 +3,29 @@
     android:id="@+id/news_cardview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
     android:layout_marginBottom="@dimen/card_vertical_margin"
     android:layout_marginLeft="@dimen/card_horizontal_margin"
     android:layout_marginRight="@dimen/card_horizontal_margin"
     android:layout_marginTop="@dimen/card_vertical_margin"
-    >
+    android:clickable="true"
+    android:focusable="true">
+
+
+
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
 
 
         <ImageView
             android:id="@+id/source_icon"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/logo"/>
-
-
-
-
-
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo" />
 
         <TextView
             android:id="@+id/title"
@@ -39,46 +36,56 @@
             android:textColor="#25C776"
             android:textSize="@dimen/title_font_size"
             android:textStyle="bold" />
+
         <TextView
             android:id="@+id/description"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:maxLines="3"
+            android:paddingBottom="@dimen/news_header_vertical_padding"
             android:paddingLeft="@dimen/news_header_horizontal_padding"
             android:paddingRight="@dimen/news_header_horizontal_padding"
             android:paddingTop="@dimen/news_header_vertical_padding"
-            android:paddingBottom="@dimen/news_header_vertical_padding"
 
             />
+
+        <Button
+            android:id="@+id/readmore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_horizontal|center_vertical"
+            android:gravity="right|center_horizontal|center_vertical"
+            android:text="Xem chi tiet"
+            android:theme="@style/MyButton"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="14dp"
-           >
+            android:paddingLeft="14dp">
 
 
-                <TextView
-                    android:id="@+id/author"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:lines="2"
-                    android:textColor="#25C776"
-                    android:textSize="15sp"
-                     />
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="2"
+                android:textColor="#25C776"
+                android:textSize="15sp" />
 
-                <TextView
-                    android:padding="4dp"
-                    android:id="@+id/timestamp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:textColor="#a0a3a7"
-                    android:paddingLeft="5dp"
+            <TextView
+                android:id="@+id/timestamp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:paddingLeft="5dp"
+                android:textColor="#a0a3a7"
+                android:textSize="@dimen/time_font_size"
 
-                    android:textSize="@dimen/time_font_size" />
+                android:textStyle="italic" />
 
         </LinearLayout>
     </LinearLayout>
+<!--</LinearLayout>-->
+
 </android.support.v7.widget.CardView>
