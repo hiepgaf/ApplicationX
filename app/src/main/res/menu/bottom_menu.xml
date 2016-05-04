@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@drawable/facebook"
+        android:title="Recents"
+        android:scaleType="fitCenter"
+      />
+    <item
+        android:icon="@drawable/google_plus"
+        android:title="Recents"
+        android:scaleType="fitCenter"/>
+    <item
+        android:id="@+id/bottomBarItemOne"
+        android:icon="@drawable/twitter"
+        android:title="Recents"
+        android:scaleType="fitCenter"/>
+    <item
+        android:id="@+id/pinterest_menu"
+        android:icon="@drawable/pinterest"
+        android:title="Recents"
+        android:scaleType="fitCenter"/>
+</menu>

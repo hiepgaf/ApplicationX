@@ -30,18 +30,10 @@ public class KenitControl extends AsyncTask<Void,Void,Void> implements Const {
     String url_get_product = "http://kenit.link/androidpart/getproduct.php";
     JSONParser jsonParser = new JSONParser();
     static ArrayList<HomePost> mFeedArrayList = new ArrayList<>();
-    KenITAdapter adapter;
-
-    public KenitControl(KenITAdapter adapter) {
-        this.adapter = adapter;
-    }
-
-    public KenitControl() {
-    }
 
     @Override
     protected Void doInBackground(Void... params) {
-        Log.d("HiepTHb", "doInBackground");
+        Log.d("HiepTHb", "doInBackground - get data");
         List<NameValuePair> paramsd = new ArrayList<NameValuePair>();
         // getting JSON string from URL
         JSONObject json = jsonParser.makeHttpRequest(url_get_product, "GET", paramsd);
@@ -52,14 +44,14 @@ public class KenitControl extends AsyncTask<Void,Void,Void> implements Const {
             for(int i=0;i<products.length();i++) {
                 JSONObject mObject = products.getJSONObject(i);
                 HomePost mFeed = new HomePost();
-
                 mFeed.setTitle(mObject.getString("post_title").toString());
                 mFeed.setContent(mObject.getString("post_content").toString());
                 mFeed.setName(mObject.getString("post_name"));
-                mFeed.setDate(mObject.getString("post_date").toString());
+                mFeed.setDate(mObject.getString("post_date"));
                 mFeed.setLink(mObject.getString("post_link"));
                 mFeed.setImage_url(mObject.getString("post_attach"));
                 Log.d("HiepGa Link",mFeed.getImage_url());
+                if(mFeed.getContent().length()>10)
                 mFeedArrayList.add(mFeed);
             }
         } catch (Exception ex) {}
@@ -69,9 +61,7 @@ public class KenitControl extends AsyncTask<Void,Void,Void> implements Const {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-       //Log.d("HiepTHb", "mFeedArrayList" + mFeedArrayList.size());
         setmFeedArrayList(mFeedArrayList);
-        adapter.notifyDataSetChanged();
     }
 
 

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -245,10 +246,12 @@ public class MainActivity extends AppCompatActivity
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new HomeFragment(appbar), "Trang chủ");
-        adapter.addFragment(new HomeFragment(appbar), "Dự Án");
-        adapter.addFragment(new HomeFragment(appbar), "Thành viên");
+      //  adapter.addFragment(new HomeFragment(appbar), "Dự Án");
+      //  adapter.addFragment(new HomeFragment(appbar), "Thành viên");
         viewPager.setAdapter(adapter);
     }
+
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -307,17 +310,18 @@ public class MainActivity extends AppCompatActivity
      /*   Bitmap b = BlurBitmapHelper.blurBitmap(this,locations[1],locations[0],getWindow().getDecorView().getWidth(),tabLayout.getHeight());
         Drawable d = new BitmapDrawable(getResources(),b);
         tabLayout.setBackground(d);*/
-     //   render(tabLayout);
         final ActionBar ab = getSupportActionBar();
         if (i == 0) {
            // Toast.makeText(MainActivity.this, "On", Toast.LENGTH_LONG).show();
             //  ab = getSupportActionBar();
+           // render(tabLayout);
+           // tabLayout.setBackgroundColor(Color.parseColor("#66000000"));
 
 
             ab.hide();
         } else {
            // Toast.makeText(MainActivity.this, "Off", Toast.LENGTH_LONG).show();
-
+            //tabLayout.setBackgroundColor(getColor(R.color.colorPrimary));
             // ab = getSupportActionBar();
             // ab.show();
         }
@@ -328,7 +332,7 @@ public class MainActivity extends AppCompatActivity
 
 
             Bitmap bitmap = Utils.loadBitmapFromView(mView);
-             bitmap = scaleBitmap(bitmap);
+          //  bitmap = scaleBitmap(bitmap);
             bitmap = Blur.fastblur(this, bitmap, 8, false);
             mView.setBackground(new BitmapDrawable(getResources(),bitmap));
 
@@ -403,4 +407,5 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
         hand.removeCallbacks(updateFliper);
     }
+
 }

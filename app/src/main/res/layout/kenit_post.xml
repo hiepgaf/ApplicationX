@@ -41,12 +41,11 @@
             android:id="@+id/description"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:maxLines="3"
+            android:maxLines="6"
             android:paddingBottom="@dimen/news_header_vertical_padding"
             android:paddingLeft="@dimen/news_header_horizontal_padding"
             android:paddingRight="@dimen/news_header_horizontal_padding"
             android:paddingTop="@dimen/news_header_vertical_padding"
-
             />
 
         <Button

@@ -41,7 +41,7 @@ import java.util.List;
 /**
  * Created by hiepth on 27/04/2016.
  */
-public class KenITAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Const{
+public class KenITAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Const {
     private Context mContext;
     private ArrayList<HomePost> mKenITPosts;
 
@@ -54,74 +54,52 @@ public class KenITAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public KenITAdapter(Context mContext, ArrayList<HomePost> mKenITPosts) {
         this.mContext = mContext;
         this.mKenITPosts = mKenITPosts;
-        Log.d("HiepTHb","KenITAdapter");
+        Log.d("HiepTHb", "KenITAdapter");
     }
 
-/*    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        Log.d("HiepTHb", "onCreateViewHolder");
+
         switch (viewType) {
             case VIEW_TYPES.PROGRESS:
-                break;
-            View v = inflater.inflate(R.layout.progress, parent);
-            return new RecyclerViewHolder(v);
+                return new RecyclerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.progress, viewGroup, false));
             case VIEW_TYPES.PADDING:
-                break;
-            View v1 = inflater.inflate(R.layout.padding, parent);
-            return new RecyclerViewHolder(v1);
-            break;
+                return new RecyclerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.padding, viewGroup, false));
             default:
-                View v2 = inflater.inflate(R.layout.kenit_post, parent);
-                return new KenITPostViewHolder(v2);
-            break;
+                return new KenITPostViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.kenit_post, viewGroup, false));
         }
-
-    }*/
-@Override
-public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-   // Log.d("HiepTHb","onCreateViewHolder");
-
-    switch (viewType) {
-        case VIEW_TYPES.PROGRESS:
-            return new RecyclerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.progress, viewGroup, false));
-        case VIEW_TYPES.PADDING:
-            return new RecyclerViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.padding, viewGroup, false));
-        default:
-            return new KenITPostViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.kenit_post, viewGroup, false));
     }
-}
 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-       // Log.d("HiepTH", "onBindViewHolder");
+        Log.d("HiepTH", "onBindViewHolder");
         //Xu ly cac tham so cua view nhu trong getView
         //mKenITPosts.clear();
-        if(holder instanceof KenITPostViewHolder) {
-       //     Log.d("HiepTH", "xyly view");
+        if (holder instanceof KenITPostViewHolder) {
+            //     Log.d("HiepTH", "xyly view");
 
             final HomePost item = mKenITPosts.get(position);
             KenITPostViewHolder kenITPostViewHolder = (KenITPostViewHolder) holder;
             kenITPostViewHolder.title.setText(item.getTitle());
-            kenITPostViewHolder.description.setText(item.getContent());
+            kenITPostViewHolder.description.setText(Utils.removeTags(item.getContent()).replaceAll("(?m)^[ \t]*\r?\n", ""));
             kenITPostViewHolder.timestamp.setText(Utils.getTimeString(item.getDate()));
-            kenITPostViewHolder.author.setText(item.getLink());
+           // kenITPostViewHolder.author.setText(item.getLink());
             //kenITPostViewHolder.post_image.setImageResource(item.getPostImageId());
             //Log.d("HiepLink",URLUtil.isValidUrl(item.getImage_url())+"");
             if (URLUtil.isValidUrl(item.getImage_url())) {
 //                try {
 //                    new mAsyn(kenITPostViewHolder.post_image).execute(new URL(item.getImage_url()));
 //                } catch (Exception  ex) {}
-              //  Picasso.with(mContext).load(R.drawable.kenit).into(kenITPostViewHolder.post_image);
+                //  Picasso.with(mContext).load(R.drawable.kenit).into(kenITPostViewHolder.post_image);
 //                String link = SERVER_NAME +"its/wp-content/uploads/2016/04/41-Flag-Map-1024x576.jpg";
 //                Log.d("Link",link);
 
                 new Picasso.Builder(mContext).listener(
-                        new Picasso.Listener()
-                        {
+                        new Picasso.Listener() {
                             @Override
-                            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
-                            {
+                            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
                                 Log.e("Picasso", "loading " + uri + " failed: ", exception);
                             }
                         }
@@ -130,14 +108,14 @@ public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewT
                         .load(item.getImage_url())
                         .placeholder(android.R.drawable.gallery_thumb)
                         .error(android.R.drawable.stat_notify_error)
-                        .resize(Utils.getScreenWidth(mContext),400)
+                        .resize(Utils.getScreenWidth(mContext), 400)
                         .into(kenITPostViewHolder.post_image);
 
 
-
-              // Picasso.with(mContext).load(item.getImage_url()).resize(600, 500).centerCrop().placeholder(R.drawable.placeholder).into(kenITPostViewHolder.post_image);
+                // Picasso.with(mContext).load(item.getImage_url()).resize(600, 500).centerCrop().placeholder(R.drawable.placeholder).into(kenITPostViewHolder.post_image);
             } else {
-                Picasso.with(mContext).load(R.drawable.logo).into(kenITPostViewHolder.post_image);            }
+                Picasso.with(mContext).load(R.drawable.logo).into(kenITPostViewHolder.post_image);
+            }
 
 
             kenITPostViewHolder.readmore.setOnClickListener(new View.OnClickListener() {
@@ -153,20 +131,17 @@ public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewT
     }
 
 
-
     @Override
     public long getItemId(int position) {
-        return super.getItemId(position);
+        return position;
     }
 
     @Override
     public int getItemCount() {
-        return mKenITPosts.size();
-    }
-
+        return (mKenITPosts != null ? mKenITPosts.size() : 0);}
     @Override
     public int getItemViewType(int position) {
-        return mKenITPosts.get(position)!=null?VIEW_TYPES.ITEM : VIEW_TYPES.PROGRESS;
+        return mKenITPosts.get(position) != null ? VIEW_TYPES.ITEM : VIEW_TYPES.PROGRESS;
     }
 
     /**
@@ -183,10 +158,11 @@ public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewT
     }
 
     public class KenITPostViewHolder extends RecyclerView.ViewHolder {
-        protected ImageView  post_image;
+        protected ImageView post_image;
         protected TextView title, description, timestamp, author;
         protected View parent;
         protected Button readmore;
+
         public KenITPostViewHolder(View itemView) {
             super(itemView);
             //Khai bao View nhu getView trong ListView
@@ -211,36 +187,36 @@ public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewT
         public View getTimestamp() {
             return timestamp;
         }
-        }
-    class mAsyn extends AsyncTask<URL,Void,Bitmap> {
-        private Bitmap bmp;
-        ImageView mImageView;
-
-        public mAsyn(ImageView mImageView) {
-            this.mImageView = mImageView;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-
-            mImageView.setImageBitmap(Bitmap.createScaledBitmap(bitmap,600,300,true));
-//            mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-//            mImageView.setLayoutParams(new Gallery.LayoutParams(300, 250));
-            //mImageView.setBackgroundResource(itemBackground);
-            super.onPostExecute(bitmap);
-        }
-
-        @Override
-        protected Bitmap doInBackground(URL... params) {
-            try {
-                Log.d("Link","khi thuc thi: "+params[0]);
-                bmp = BitmapFactory.decodeStream(params[0].openConnection()
-                        .getInputStream());
-//                bmp = Bitmap.createScaledBitmap(bmp,600,300,true);
-            } catch (IOException e){
-                Log.d("Loi",e.getMessage());
-            }
-            return bmp;
-        }
     }
+//    class mAsyn extends AsyncTask<URL,Void,Bitmap> {
+//        private Bitmap bmp;
+//        ImageView mImageView;
+//
+//        public mAsyn(ImageView mImageView) {
+//            this.mImageView = mImageView;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Bitmap bitmap) {
+//
+//            mImageView.setImageBitmap(Bitmap.createScaledBitmap(bitmap,600,300,true));
+////            mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+////            mImageView.setLayoutParams(new Gallery.LayoutParams(300, 250));
+//            //mImageView.setBackgroundResource(itemBackground);
+//            super.onPostExecute(bitmap);
+//        }
+//
+//        @Override
+//        protected Bitmap doInBackground(URL... params) {
+//            try {
+//                Log.d("Link","khi thuc thi: "+params[0]);
+//                bmp = BitmapFactory.decodeStream(params[0].openConnection()
+//                        .getInputStream());
+////                bmp = Bitmap.createScaledBitmap(bmp,600,300,true);
+//            } catch (IOException e){
+//                Log.d("Loi",e.getMessage());
+//            }
+//            return bmp;
+//        }
+//    }
 }

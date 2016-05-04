@@ -41,11 +41,11 @@ public class Utils {
         long then=0;
         //  then = fromdate.getTime();
         DateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-        Log.d("HiepTHb", "gettime");
+
         try {
             Date start = newDateFormat.parse(fromdate);
             then = start.getTime();
-            Log.d("HiepTHb","gettime" + start.getTime());
+
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -89,7 +89,7 @@ public class Utils {
         } else {
             dateStr.append(newDateFormat.format(date));
         }
-
+Log.d("HiepTHb","ket qua time "+dateStr.toString());
         return dateStr.toString();
     }
 
@@ -110,7 +110,7 @@ public class Utils {
                 mView.getWidth(),
                 mView.getHeight(),
                 Bitmap.Config.ARGB_8888);
-
+Log.d("HiepTHb","Check loadbitmap from View : w "+ mView.getWidth()+ " h "+mView.getHeight());
         Canvas c = new Canvas(b);
 
         // With the following, screen blinks
@@ -121,7 +121,21 @@ public class Utils {
         return b;
     }
 
-
+    public static String removeTags(String in)
+    {
+        int index=0;
+        int index2=0;
+        while(index!=-1)
+        {
+            index = in.indexOf("<");
+            index2 = in.indexOf(">", index);
+            if(index!=-1 && index2!=-1)
+            {
+                in = in.substring(0, index).concat(in.substring(index2+1, in.length()));
+            }
+        }
+        return in;
+    }
 
 
 }
